@@ -1,12 +1,11 @@
 import sys
 
 def mostrar_menu():
-    """Muestra el menú principal."""
     print("\n=== Calculadora en Consola ===")
-    print("A. Operaciones Aritméticas Básicas")
-    print("B. Álgebra y Trigonometría")
-    print("C. Conversor de Sistemas (Modo Programador)")
-    print("S. Salir")
+    print("1. Operaciones Aritméticas Básicas")
+    print("2. Álgebra y Trigonometría")
+    print("3. Conversor de Sistemas (Modo Programador)")
+    print("4. Salir")
 
 def leer_numero(mensaje):
     """Lee un número desde la consola con validación."""
@@ -17,33 +16,31 @@ def leer_numero(mensaje):
             print("❌ Entrada inválida. Por favor, ingresa un número.")
 
 def main():
-    """Función principal de la aplicación."""
+    import modo_prog
     while True:
         mostrar_menu()
-        opcion = input("Selecciona una opción (1-5): ").strip()
+        opcion = input("Selecciona una opción (1-4): ").strip()
 
-        if opcion == "5":
+        if opcion == "4":
             print("👋 Saliendo de la aplicación...")
             sys.exit(0)
 
-        if opcion not in {"1", "2", "3", "4"}:
-            print("❌ Opción inválida. Intenta de nuevo.")
-            continue
-
-        num1 = leer_numero("Ingresa el primer número: ")
-        num2 = leer_numero("Ingresa el segundo número: ")
-
         if opcion == "1":
-            print(f"✅ Resultado: {num1 + num2}")
+            import aritmetica
+            aritmetica.main()
         elif opcion == "2":
-            print(f"✅ Resultado: {num1 - num2}")
-        elif opcion == "3":
-            print(f"✅ Resultado: {num1 * num2}")
-        elif opcion == "4":
-            if num2 == 0:
-                print("⚠️ No se puede dividir entre cero.")
+            import alg_tri
+            if hasattr(alg_tri, 'main'):
+                alg_tri.main()
             else:
-                print(f"✅ Resultado: {num1 / num2}")
+                print("No implementado.")
+        elif opcion == "3":
+            try:
+                modo_prog.menu_programador()
+            except Exception:
+                print("Error: Entrada inválida")
+        else:
+            print("❌ Opción inválida. Intenta de nuevo.")
 
 if __name__ == "__main__":
     try:
